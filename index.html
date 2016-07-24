@@ -5,6 +5,7 @@
 		<style>
 			body {
 				text-align: center;
+				-webkit-tap-highlight-color: rgba(0,0,0,0);
 				-webkit-touch-callout: none;
 				-webkit-user-select: none;
 				-khtml-user-select: none;
@@ -17,15 +18,15 @@
 				background-color: lightgray;
 				color: white;
 				font-weight: 700;
-				font-size: 36px;
+				font-size: 24px;
 				margin-bottom:30px;
 				width:80%;
 				cursor:pointer;
 				text-align:center;
-				padding: 220px 20px 20px;
+				padding: 120px 10px 0;
 				background-image: url('https://olkommisjonen.files.wordpress.com/2016/01/mack_pilsner.jpg');
 				background-size: 150px;
-				background-position: center center;
+				background-position: center 5px;
 				background-repeat: no-repeat;
 			}
 			div.clicked {
@@ -34,11 +35,11 @@
 		</style>
 	</head>
 	<body>
-		<div id="no-latency">Delay: 0ms</div>
-		<div id="short-latency">Delay: 50ms</div>
-		<div id="medium-latency">Delay: 100ms</div>
-		<div id="long-latency">Delay: 150ms</div>
-		<div id="super-long-latency">Delay: 200ms</div>
+		<div id="no-latency">Delay: 10ms</div>
+		<div id="short-latency">Delay: 100ms</div>
+		<div id="medium-latency">Delay: 200ms</div>
+		<div id="long-latency">Delay: 300ms</div>
+		<div id="super-long-latency">Delay: 400ms</div>
 		<script>
 			(function (elements) {
 				var eventCapturing = true;
@@ -50,18 +51,20 @@
 				});
 
 				// click handler
-				function clickHandler() {
+				function clickHandler(event) {
 					var numberRegexp = new RegExp('[0-9]+', 'g');
 					var millis = parseInt(numberRegexp.exec(this.innerHTML), 10);
 					var element = this;
 
 					clearTimeout(timeout);
 					timeout = setTimeout(function () {
-						// element.classList = element.className.indexOf('clicked') !== -1 ? '' : 'clicked';
-						element.className.indexOf('clicked') !== -1 ?
-							element.classList.remove('clicked') :
-							element.classList.add('clicked')
+						// window.requestAnimationFrame(function () {
+							element.className.indexOf('clicked') !== -1 ?
+								element.classList.remove('clicked') :
+								element.classList.add('clicked')
+						// })
 					}, millis);
+
 				}
 
 			})([
