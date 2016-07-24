@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				text-align: center;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			div {
+				display:inline-block;
+				background-color: lightgray;
+				color: white;
+				font-weight: 700;
+				font-size: 36px;
+				margin-bottom:30px;
+				width:80%;
+				cursor:pointer;
+				text-align:center;
+				padding: 220px 20px 20px;
+				background-image: url('https://olkommisjonen.files.wordpress.com/2016/01/mack_pilsner.jpg');
+				background-size: 150px;
+				background-position: center center;
+				background-repeat: no-repeat;
+			}
+			div.clicked {
+				background-color: steelblue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="no-latency">Delay: 0ms</div>
+		<div id="short-latency">Delay: 50ms</div>
+		<div id="medium-latency">Delay: 100ms</div>
+		<div id="long-latency">Delay: 150ms</div>
+		<div id="super-long-latency">Delay: 200ms</div>
+		<script>
+			(function (elements) {
+				var eventCapturing = true;
+				var timeout = null;
+
+				// bind elements
+				elements.forEach(function (element) {
+					element.addEventListener('click', clickHandler, eventCapturing);
+				});
+
+				// click handler
+				function clickHandler() {
+					var numberRegexp = new RegExp('[0-9]+', 'g');
+					var millis = parseInt(numberRegexp.exec(this.innerHTML), 10);
+					var element = this;
+
+					clearTimeout(timeout);
+					timeout = setTimeout(function () {
+						element.classList = element.className.indexOf('clicked') !== -1 ? '' : 'clicked';
+					}, millis);
+				}
+
+			})([
+				document.getElementById('no-latency'),
+				document.getElementById('short-latency'),
+				document.getElementById('medium-latency'),
+				document.getElementById('long-latency'),
+				document.getElementById('super-long-latency')
+			]);
+		</script>
+	</body>
+</html>
